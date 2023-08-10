@@ -5,6 +5,7 @@ runs:
   main: 'index.js'
 inputs:
   repo-token:
-  description: "GitHub Token"
-  requured: true
-  default: ${{github.token}}
+    type: string
+    description: "GitHub Token"
+    requured: true
+    default: ${{github.token}}
