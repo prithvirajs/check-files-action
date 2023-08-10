@@ -8,4 +8,4 @@ inputs:
     type: string
     description: "GitHub Token"
     requured: true
-    default: ${{github.token}}
+    default: "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"

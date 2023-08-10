@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require("fs");
 const { connected } = require('process');
+const { Octokit } = require("@octokit/rest");
 
 async function checkFileExistence(path) {
     return fs.promises.access(path, fs.constants.F_OK)
