@@ -1,0 +1,54 @@
+name: test
+
+on:
+  push:
+    paths-ignore:
+        - "apko/**"
+        - "**.md"
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * *"
+
+jobs:
+  ## Debian based
+
+  build_debian_11_static:
+    uses: greenqloud/docker-base-images/.github/workflows/build-push-image.yaml@main
+    with:
+      base_image: "gcr.io/distroless/static-debian11:nonroot"
+      dockerfile: "dockerfiles/static.Dockerfile"
+      verify: true
+      public_key: "keys/gcr_distroless.pub"
+      tag: "ghcr.io/greenqloud/docker-base-images/distroless/debian-static:11"
+    secrets: inherit
+
+   
+  build_debian_11_java17:
+    uses: greenqloud/docker-base-images/.github/workflows/build-push-image.yaml@main
+    with:
+      base_image: "gcr.io/distroless/java17-debian11:nonroot"
+      dockerfile: "dockerfiles/base.Dockerfile"
+      verify: true
+      public_key: "keys/gcr_distroless.pub"
+      tag: "ghcr.io/greenqloud/docker-base-images/distroless/debian-java:17"
+    secrets: inherit
+
+  ## CBL-Mariner
+
+  build_cbl_mariner_2_core:
+    uses: greenqloud/docker-base-images/.github/workflows/build-push-image.yaml@main
+    with:
+      base_image: "mcr.microsoft.com/cbl-mariner/base/core:2.0"
+      dockerfile: "dockerfiles/cbl-mariner-core.Dockerfile"
+      verify: false
+      tag: "ghcr.io/greenqloud/docker-base-images/base/cbl-mariner-core:2.0"
+    secrets: inherit
+
+  build_cbl_mariner_2_distroless_minimal:
+    uses: greenqloud/docker-base-images/.github/workflows/build-push-image.yaml@main
+    with:
+      base_image: "mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0"
+      dockerfile: "dockerfiles/cbl-mariner-distroless-minimal.Dockerfile"
+      verify: false
+      tag: "ghcr.io/greenqloud/docker-base-images/distroless/cbl-mariner-minimal:2.0"
+    secrets: inherit
